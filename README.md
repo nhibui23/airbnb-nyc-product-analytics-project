@@ -1,24 +1,29 @@
 # Airbnb NYC Project
 
-## Motivation
-As a frequent traveler between Villanova and New York City, I have always been curious about what separates a great Airbnb listing from a mediocre one. Pricing seems inconsistent, quality varies widely, and some neighbourhoods clearly outperform others. This project therefore takes a data-driven approach to understand what actually drives listing success on the Airbnb platform.
-
-Using the public NYC Airbnb dataset (~102K listings), I conducted a full product analytics investigation from data cleaning and exploratory analysis through A/B testing and formal statistical testing to deliver actionable recommendations for Airbnb's product team.
-
-## Dataset
-[Airbnb Open Data](https://www.kaggle.com/datasets/arianazmoudeh/airbnbopendata) with 102,599 NYC listings, cleaned down to 63,718 usable rows across 21 columns.
-
 ## Business Questions
 **You're a Product Analyst at Airbnb. The growth team has one question:**
 **Where should we invest next, and what should a new host in that market do to succeed?**
 
-To answer it, I analyzed 64,000 NYC listings across 5 boroughs to identify:
+To answer it, I analyzed 64,038 NYC listings across 5 boroughs to identify:
 1. What host factors actually drive review ratings
 2. Whether the Instant Book feature moves the needle on engagement
 3. Which neighborhoods represent the biggest untapped growth opportunity
 
-The result is a data-backed growth playbook — where to expand, what to build, 
-and which features to deprioritize.
+The result is a data-backed growth playbook for Airbnb on where to expand, what to build, 
+and which features to prioritize.
+
+## Results at a Glance
+- **Availability** is the #1 driver of review ratings (ANOVA p < 0.0001)
+- **Instant Bookable** has no measurable impact on engagement (p = 0.38)
+- **The Bronx** is the clearest growth opportunity with the highest ratings and lowest supply
+
+---
+
+## Motivation
+As a frequent traveler between Villanova and New York City, I have always been curious about what separates a great Airbnb listing from a mediocre one. Pricing seems inconsistent, quality varies widely, and some neighbourhoods clearly outperform others. This project therefore takes a data-driven approach to understand what actually drives listing success on the Airbnb platform.
+
+## Dataset
+[Airbnb Open Data](https://www.kaggle.com/datasets/arianazmoudeh/airbnbopendata) with 102,599 NYC listings, cleaned down to 64,038 rows across 21 columns.
 
 ---
 
@@ -65,16 +70,13 @@ and which features to deprioritize.
 ## Key Findings
 
 **Factors that significantly impact ratings:**
-- Availability is the strongest predictor (ANOVA p < 0.0001, 3 significant pairs in Tukey's HSD)
-  => Hosts who list less frequently achieve higher ratings, likely due to better maintenance and preparation between guests.
+- Availability is the strongest predictor (ANOVA p < 0.0001, 3 significant pairs in Tukey's HSD) 
 - Monthly stays (8–30 nights) significantly outperform short and medium stays (p = 0.0001)
-  => Both hosts and guests appear more invested in longer commitments.
 - Very high priced listings ($1000+) rate significantly lower than mid-range listings (p = 0.0004)
-  => Guest expectations scale with price, and when listings fail to deliver, ratings suffer.
 
 **Factors that do not matter:**
 - Instant Book shows no significant impact on engagement (Welch's t-test p = 0.38, Cohen's d = 0.007, power = 14.3%), as all 4 validation methods confirm this.
-- Host identity verification has nearly np effect on ratings (p = 0.62).
+- Host identity verification has nearly no effect on ratings (p = 0.62).
 
 **Growth opportunity:**
 - The Bronx has the highest average rating (3.36), strong review activity (1.85/month), and the lowest listing supply among major boroughs (2,049)
