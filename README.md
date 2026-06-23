@@ -1,4 +1,4 @@
-# Airbnb NYC Product Analytics
+# Airbnb NYC Product Analytics Project
 
 *Where Airbnb should expand, what new hosts should build, and which features to deprioritize.*
 
