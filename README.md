@@ -28,10 +28,10 @@ As a frequent traveler between Villanova and New York City, I have always been c
 ---
 
 ## Tools Used
-- **Python** (pandas, numpy, matplotlib, seaborn, scipy, statsmodels) — analysis & statistical testing
-- **PostgreSQL** — market segmentation & deep-dive queries
-- **Power BI** — executive dashboard
-- **Claude API** — AI-powered insight layer
+- **Python** (pandas, numpy, matplotlib, seaborn, scipy, statsmodels): analysis & statistical testing
+- **PostgreSQL** : market segmentation & deep-dive queries
+- **Power BI**: executive dashboard
+- **Claude API**: AI-powered insight layer
 
 ## Project Structure
 
@@ -83,18 +83,18 @@ As a frequent traveler between Villanova and New York City, I have always been c
 - Mott Haven, Schuylerville, and Belmont are the top 3 neighbourhoods for targeted host acquisition.
 
 ## Product Recommendations
-1. Develop a pricing guidance tool to help hosts avoid overpricing relative to their listing quality
-2. Promote monthly stays as a premium tier with dedicated host badges and guest discounts
-3. Encourage hosts to schedule maintenance breaks rather than listing year-round
-4. Focus host acquisition efforts in the Bronx, specifically Mott Haven, Schuylerville, and Belmont
-5. Shift resources away from Instant Book as a growth lever
+1. Develop a **pricing guidance tool **to help hosts avoid overpricing relative to their listing quality
+2. **Promote monthly stays **as a premium tier with dedicated host badges and guest discounts
+3. Encourage hosts to **schedule maintenance breaks** rather than listing year-round
+4. Focus **host acquisition efforts in the Bronx**, specifically Mott Haven, Schuylerville, and Belmont
+5. Shift **resources away from Instant Book** as a growth lever
 
 ## Future data needed
-- Booking volume data to measure actual demand
-- Time-series data to validate whether recommendations improve outcomes
-- Listing photo and description quality for potential maintenance suggestions
-- Guest demographics to understand rating behavior across traveler types
-- Competitor pricing data to build the recommended pricing tool
+-** Booking volume data** to measure actual demand
+- **Time-series data** to validate whether recommendations improve outcomes
+- **Listing photo and description quality** for potential maintenance suggestions
+- **Guest demographics** to understand rating behavior across traveler types
+- **Competitor pricing data **to build the recommended pricing tool
 
 ## Author
 **Nhi Bui** — Villanova University  
