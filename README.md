@@ -34,6 +34,13 @@ I analyzed 63,718 NYC listings across 5 boroughs to answer it.
 4. Focus host acquisition in Bronx neighborhoods (Mott Haven, Schuylerville, Belmont)
 5. Shift resources away from Instant Book
 
+## Future Data Needed
+- **Booking volume** data to measure actual demand
+- **Time-series data** to validate whether recommendations improve outcomes
+- **Listing photo and description quality** for potential maintenance suggestions
+- **Guest demographics** to understand rating behavior across traveler types
+- **Competitor pricing** data to build the recommended pricing tool
+
 ---
 
 ## Dataset
@@ -63,12 +70,10 @@ I analyzed 63,718 NYC listings across 5 boroughs to answer it.
 
 └── requirements.txt
 
----
-
 ## Limitations
 Snapshot data only · No booking/revenue data · 1–5 rating scale limits sensitivity · Findings are correlational, not causal · NYC-specific
 
 ---
 
-**Nhi Bui** — Villanova University  
+**Nhi Bui** - Villanova University  
 [LinkedIn](https://linkedin.com/in/nhiuyenbui) · [GitHub](https://github.com/nhibui23)
