@@ -44,17 +44,17 @@ LIMIT 10;
 
 SELECT COUNT(*) AS duplicate_ids
 FROM (
-    SELECT id
-    FROM listings
-    GROUP BY id
-    HAVING COUNT(*) > 1
+SELECT id
+FROM listings
+GROUP BY id
+HAVING COUNT(*) > 1
 ) AS duplicate;
 
 -- With only 362 duplicate values, we can delete the duplicate rows with a higher address and keep only one copy of each id
 DELETE FROM listings a
 USING listings b
 WHERE a.id = b.id
-  AND a.ctid > b.ctid;
+AND a.ctid > b.ctid;
 
 -- Add PRIMARY KEY constraint back to the table
 ALTER TABLE listings ADD PRIMARY KEY (id);
