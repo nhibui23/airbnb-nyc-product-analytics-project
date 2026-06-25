@@ -44,8 +44,8 @@ END AS price_segment,
 COUNT(*) AS total_listings,
 (SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END)) AS instant_book_listing,
 ROUND(100*SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END)/COUNT(*), 1) AS adoption_rate,
-ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN review_rate_number END)) AS avg_rating_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN review_rate_number END)) AS avg_rating_no_ib,
+ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN review_rate_number END), 2) AS avg_rating_ib,
+ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN review_rate_number END), 2) AS avg_rating_no_ib,
 ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN number_of_reviews END), 1) AS avg_reviews_ib,
 ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN number_of_reviews END), 1) AS avg_reviews_no_ib
 FROM listings
@@ -73,23 +73,21 @@ ORDER BY instant_book_listing DESC;
 -- ============================================================
 
 
--- FOLLOW UP 2C. Even though minimum night is also the strongest influence, which direction should hosts go?
--- Should they allow 1-night stays, require a week, or push for monthly?
-SELECT 
-CASE
-WHEN minimum_nights = 1 THEN '1. 1 night'
-WHEN minimum_nights BETWEEN 2 AND 3 THEN '2. 2-3 nights'
-WHEN minimum_nights BETWEEN 4 AND 7 THEN '3. 4-7 nights (weekly)'
-WHEN minimum_nights BETWEEN 8 AND 30 THEN '4. 8-30 nights (monthly)'
-ELSE '5. 30+ nights (long-term)'
-END AS min_nights_group,
-COUNT(*) AS listings, 
-ROUND(AVG(review_rate_number), 2) AS avg_review_rate,
-ROUND(AVG(number_of_reviews),2) AS avg_number_of_reviews
+-- FOLLOW UP 2C. INSTANT BOOK BY ROOM TYPE (with adoption rate)
+-- Does Instant Book matter more for different types of room?
+
+SELECT
+room_type,
+COUNT(*) AS total_listings,
+SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END) AS instant_book_listings,
+ROUND(100 * SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END) / COUNT(*),1) AS adoption_rate,
+ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN review_rate_number END), 2) AS avg_rating_ib,
+ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN review_rate_number END), 2) AS avg_rating_no_ib,
+ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN number_of_reviews END), 1) AS avg_reviews_ib,
+ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN number_of_reviews END), 1) AS avg_reviews_no_ib
 FROM listings
-GROUP BY min_nights_group
-HAVING COUNT (*) >=10
-ORDER BY avg_review_rate DESC;
+GROUP BY room_type
+ORDER BY total_listings DESC;
 
 -- ============================================================
 -- KEY TAKEAWAY:
