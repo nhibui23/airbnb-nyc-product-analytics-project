@@ -41,7 +41,6 @@ ORDER BY count DESC
 LIMIT 10;
 
 -- Check for the number of duplicate values
-
 SELECT COUNT(*) AS duplicate_ids
 FROM (
 SELECT id
