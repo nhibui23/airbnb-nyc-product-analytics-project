@@ -31,47 +31,49 @@ ORDER BY total_listings DESC;
 -- ============================================================
 
 
--- FOLLOW UP 2B. Even though availability is the strongest influence, which direction should hosts go?
--- Should a host list their property year-round, or limit availability?
+-- FOLLOW UP 2B. INSTANT BOOK BY PRICE SEGMENT 
+-- Does Instant Book matter more for budget or premium listings?
 
-SELECT 
-CASE
-WHEN availability_365 <= 90  THEN '1. Low (0-90 days)'
-WHEN availability_365 <= 180 THEN '2. Medium (91-180 days)'
-WHEN availability_365 <= 270 THEN '3. High (181-270 days)'
-ELSE '4. Year-round (271-365 days)'
-END AS availability,
-COUNT(*) AS listings, 
-ROUND(AVG(review_rate_number), 2) AS avg_review_rate,
-ROUND(AVG(number_of_reviews),2) AS avg_number_of_reviews
+SELECT
+CASE 
+WHEN price < 100  THEN '1. Under $100'
+WHEN price < 300  THEN '2. $100-299'
+WHEN price < 700  THEN '3. $300-699'
+ELSE '4. $700+'
+END AS price_segment,
+COUNT(*) AS total_listings,
+(SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END)) AS instant_book_listing,
+ROUND(100*SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END)/COUNT(*), 1) AS adoption_rate,
+ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN review_rate_number END)) AS avg_rating_ib,
+ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN review_rate_number END)) AS avg_rating_no_ib,
+ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN number_of_reviews END), 1) AS avg_reviews_ib,
+ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN number_of_reviews END), 1) AS avg_reviews_no_ib
 FROM listings
-GROUP BY availability
-HAVING COUNT (*) >=10
-ORDER BY availability, listings, avg_review_rate DESC;
+GROUP BY price_segment
+ORDER BY instant_book_listing DESC;
 
 -- ============================================================
 -- KEY TAKEAWAY:
 
--- Hosts who limit availability to <90 days achieve the highest average ratings (3.32) 
--- This confirms the maintenance break importance
+-- Similarly, across all price tiers, Instant Book makes no measurable positive difference 
 
--- As availability increases, ratings drop slightly (3.24 at high availability) while review volume climbs
--- This presents a tradeoff for hosts, as more open days lead to lower review rate number but higher number of reviews 
-
--- Our early ANOVA finding that availability matters most is validated
--- Availability direction is now clear for hosts: less availability is better for higher rating quality.
+-- At the  price level Under $100, it correlates with worse outcomes (3.2 vs 3.3 stars, 34 vs 38 reviews). 
+-- Therefore, the hypothesis that budget guests book more via Instant Book is contradicted by the data.
+ 
+-- This pattern suggests hosts who manually screen bookings may be filtering out poor-fit guests
+-- This would require host interview data to confirm.
 -- ============================================================
--- RECOMMENDATION:
+-- RECOMMENDATION: 
 
--- 1. Add "Maintenance Mode" to encoruage having more maintenance break for better listing quality and guets experience
--- This should not interefere with their responsiveness rating during active mode on
+-- Similarly, Airbnb should eprioritize Instant Book as a growth lever entirely, since it either has little to no effect or hurt the review rate number and number of reviews more for lower-price level
 
--- 2. Suggest availability vs ratings vs number of ratings for host when setting availability
--- They can decide whether to trade off for review rating or number of reviews in general
+-- Investigate the low-price-tier screening hypothesis as a follow-up: 
+-- Do non-Instant Book budget hosts have qualitatively different guest experiences than Instant Book budget hosts? 
+-- If yes, Airbnb may want to build better guest-screening tools for budget hosts rather than push Instant Book on them.
 -- ============================================================
 
 
--- FOLLOW UP 1C. Even though minimum night is also the strongest influence, which direction should hosts go?
+-- FOLLOW UP 2C. Even though minimum night is also the strongest influence, which direction should hosts go?
 -- Should they allow 1-night stays, require a week, or push for monthly?
 SELECT 
 CASE
