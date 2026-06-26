@@ -85,7 +85,7 @@ ORDER BY listings DESC;
 -- ============================================================
 
 -- FOLLOW UP 3D. QUEENS NEIGHBORHOOD RECOMMENDATION 
--- Does Instant Book matter more for different types of room?
+-- Identify top-performing neighborhoods in Queens and the ideal room type + price profile for a new host to target.
 
 SELECT
 room_type,
