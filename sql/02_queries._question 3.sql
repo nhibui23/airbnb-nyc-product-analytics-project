@@ -22,16 +22,25 @@ ORDER BY reviews_per_listing DESC;
 -- ============================================================
 -- KEY TAKEAWAY:
 
--- Instant Book adoption is consistently ~50% across all NYC boroughs, so the comparison is well everywhere
+-- Previous Python analysis identified Bronx as the growth opportunity based on high ratings & low supply
+-- Based on SQL analysis, the ranking shifts:
+--
+--   1. Queens has 42.5 reviews/listing (with the highest demand)
+--   2. Staten Island has 39.2 (highest ratings at 3.39)
+--   4. Bronx — 37.2 (have fairly high rating but low-supply)
+--
+-- Additional to Python conclusion, Queens is the surprise leader
+-- Despite having 9,338 existing listings, each one generates more guest engagement than other borough
+-- This suggests that the underlying demand in Queens is not fully met. 
 
--- The rating difference between Instant Book and non-Instant Book listings ranges from 0.00 (Staten Island) to 0.03 (Bronx) 
-
--- Similarly, review volume differences are also negligible (max 1.2 reviews on a base of 38+)
- 
--- ============================================================
+-- Meanwhile, Brroklyn and Manhattan, shows of market saturation with the most listings and lowest engagement per listing.
+---============================================================
 -- RECOMMENDATION:
 
--- Confirm the moving reources away from Instant Book as a growth lever for listings by boroughs
+-- Adjust the growth strategy from only growing in Broxn to shifting resources to Queens as well:
+-- 1. Inves in host acquisition in Queens where demand is clearly outpacing supply
+-- 2. Continue to target growing in Bronx, specifically Mott Haven, Schuylerville, and Belmont 
+-- 3. Shift reeources away from Brooklyn and Manhattan where supply is saturated
 -- ============================================================
 
 
