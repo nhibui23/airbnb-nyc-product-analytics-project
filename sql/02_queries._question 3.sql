@@ -35,26 +35,23 @@ ORDER BY reviews_per_listing DESC;
 -- ============================================================
 
 
--- FOLLOW UP 2B. INSTANT BOOK BY PRICE SEGMENT 
--- Does Instant Book matter more for budget or premium listings?
+-- FOLLOW UP 3B. BRONX MARKET LANDSCAPE
+-- What do current Bronx listings look like? 
 
 SELECT
-CASE 
-WHEN price < 100  THEN '1. Under $100'
-WHEN price < 300  THEN '2. $100-299'
-WHEN price < 700  THEN '3. $300-699'
-ELSE '4. $700+'
-END AS price_segment,
-COUNT(*) AS total_listings,
-(SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END)) AS instant_book_listing,
-ROUND(100*SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END)/COUNT(*), 1) AS adoption_rate,
-ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN review_rate_number END), 2) AS avg_rating_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN review_rate_number END), 2) AS avg_rating_no_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN number_of_reviews END), 1) AS avg_reviews_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN number_of_reviews END), 1) AS avg_reviews_no_ib
+neighbourhood,
+COUNT(*) AS listings,
+ROUND(AVG(price), 2) AS avg_price,
+ROUND(MIN(price), 2) AS min_price,
+ROUND(MAX(price), 2) AS max_price,
+ROUND(AVG(review_rate_number), 2) AS avg_review_rate,
+ROUND(AVG(minimum_nights), 1) AS avg_min_nights,
+ROUND(AVG(availability_365), 0) AS avg_availability
 FROM listings
-GROUP BY price_segment
-ORDER BY instant_book_listing DESC;
+WHERE neighbourhood_group = 'Bronx'
+GROUP BY neighbourhood
+HAVING COUNT(*) >= 5
+ORDER BY listings DESC;
 
 -- ============================================================
 -- KEY TAKEAWAY:
