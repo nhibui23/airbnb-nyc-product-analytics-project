@@ -1,20 +1,23 @@
--- Question 2. DOES INSTANT BOOK DRIVE ENGAGEMENT?
+-- Question 3. WHERE SHOULD AIRBNB FOCUS GROWTH?
 
 
--- FOLLOW UP 2A. INSTANT BOOK BY BOROUGH 
--- Maybe Instant Book doesn't help citywide, but does it help in less competitive markets like the Bronx? 
+-- FOLLOW UP 3A. SUPPLY AND DEMAND BY BOROUGH OF BRONX
+-- Listing count tells Airbnb about supply of Bronx, but it doesn't tell if this  market is underserved with lost of demand or saturated with more supply needed
+-- Compare listing count (supply) vs total reviews (demand)
+-- This ratio shows where each listing generates more guest engagement on average
 
-SELECT neighbourhood_group AS borough,
-COUNT (*) AS total_listings,
-SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END) AS instant_book_listing,
-ROUND(100*SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END)/COUNT(*), 1) AS adoption_rate,
-ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN review_rate_number END), 2) AS avg_rating_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN review_rate_number END), 2) AS avg_rating_no_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN number_of_reviews END), 1) AS avg_reviews_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN number_of_reviews END), 1) AS avg_reviews_no_ib
+SELECT
+neighbourhood_group AS borough,
+COUNT(*) AS total_listings,
+SUM(number_of_reviews) AS total_reviews,
+ROUND(SUM(number_of_reviews) * 1 / COUNT(*), 1) AS reviews_per_listing,
+ROUND(AVG(review_rate_number), 2) AS avg_review_rate,
+ROUND(AVG(availability_365), 0) AS avg_availability,
+ROUND(AVG(price), 2) AS avg_price
 FROM listings
 GROUP BY neighbourhood_group
-ORDER BY total_listings DESC;
+ORDER BY reviews_per_listing DESC;
+
 
 -- ============================================================
 -- KEY TAKEAWAY:
