@@ -83,27 +83,8 @@ HAVING COUNT(*) >= 5
 ORDER BY listings DESC;
 
 -- ============================================================
--- KEY TAKEAWAY:
 
--- Similarly, across all price tiers, Instant Book makes no measurable positive difference 
-
--- At the  price level Under $100, it correlates with worse outcomes (3.2 vs 3.3 stars, 34 vs 38 reviews). 
--- Therefore, the hypothesis that budget guests book more via Instant Book is contradicted by the data.
- 
--- This pattern suggests hosts who manually screen bookings may be filtering out poor-fit guests
--- This would require host interview data to confirm.
--- ============================================================
--- RECOMMENDATION: 
-
--- Similarly, Airbnb should eprioritize Instant Book as a growth lever entirely, since it either has little to no effect or hurt the review rate number and number of reviews more for lower-price level
-
--- Investigate the low-price-tier screening hypothesis as a follow-up: 
--- Do non-Instant Book budget hosts have qualitatively different guest experiences than Instant Book budget hosts? 
--- If yes, Airbnb may want to build better guest-screening tools for budget hosts rather than push Instant Book on them.
--- ============================================================
-
-
--- FOLLOW UP 2C. INSTANT BOOK BY ROOM TYPE (with adoption rate)
+-- FOLLOW UP 3D. QUEENS NEIGHBORHOOD RECOMMENDATION 
 -- Does Instant Book matter more for different types of room?
 
 SELECT

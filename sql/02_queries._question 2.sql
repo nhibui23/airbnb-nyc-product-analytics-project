@@ -74,7 +74,7 @@ ORDER BY instant_book_listing DESC;
 -- ============================================================
 
 
--- FOLLOW UP 2C. INSTANT BOOK BY ROOM TYPE (with adoption rate)
+-- FOLLOW UP 2C. INSTANT BOOK BY ROOM TYPE 
 -- Does Instant Book matter more for different types of room?
 
 SELECT
