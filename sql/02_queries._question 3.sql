@@ -44,8 +44,8 @@ ORDER BY reviews_per_listing DESC;
 -- ============================================================
 
 
--- FOLLOW UP 3B. QUEENS MARKET LANDSCAPE
--- What do current Bronx listings look like? 
+-- FOLLOW UP 3B. QUEENS NEIGHBORHOOD RECOMMENDATION 
+-- Identify top-performing neighborhoods in Queens and the room type & pricing for hosts to target.
 
 SELECT
 neighbourhood,
@@ -58,17 +58,43 @@ ROUND(AVG(minimum_nights), 1) AS avg_min_nights,
 ROUND(AVG(availability_365), 0) AS avg_availability
 FROM listings
 WHERE neighbourhood_group = 'Queens'
-GROUP BY neighbourhood
-HAVING COUNT(*) >= 5
-ORDER BY listings DESC;
+GROUP BY neighbourhood, room_type
+HAVING COUNT(*) >= 3
+ORDER BY avg_review_rate DESC;
 
 -- ============================================================
+-- KEY TAKEAWAY:
+
+-- Within Queens, the top-rated neighborhoods are:
+-- 1. Briarwood (4 review rate with 33 listings)
+-- 2. Laurelton (3.82)
+-- 3. The cluster of Far Rockaway / Bayside / Rosedale / 
+-- South Ozone Park / St. Albans (all 3.65-3.71)
+--
+-- Ridgewood (183 listings, 8.1 monthly reviews) is the volume and engagement leader
+
+-- Pricing is consistent across all top performers ($530-$788), indicating Queens is a quality-driven market instead of differentiating based on price
+-- ============================================================
+-- RECOMMENDATION:
+
+-- 1. Expand to high demand areas - Ridgewood, Maspeth, St. Albans, as these new hosts here enter an active market with engagement.
+-- Build an in-product dashboard showing new hosts the average rating and price range for their neighborhood and room type combination. 
+-- Right now, hosts onboarding into Queens have no visibility into which neighborhoods actually perform, as they default to well-known areas like Astoria, missing higher-quality opportunities in places like Briarwood or Ridgewood.
+
+-- 2. Position smaller markets but top-tier ratings - Briarwood, Laurelton, Far 
+
+-- 3. Pricing guidance for new Queens hosts: target $600-700 (the median of top performers), as below $530 signals quality concerns, while above $800 raises expectations for high ratings
+-- Airbnb could build a "price fit" indicator on the listing creation flow: 
+-- A host pricing too low or too high will see a warning 
+-- This nudges hosts toward the price band where quality wins
+-- ============================================================
+
 
 -- FOLLOW UP 3C. BRONX MARKET LANDSCAPE
--- What do current Bronx listings look like? 
+-- What pricing and room type should a new host target for top 3 of Bronx - Mott Haven, Schuylerville, and Belmont?
 
 SELECT
-neighbourhood,
+neighbourhood, room_type,
 COUNT(*) AS listings,
 ROUND(AVG(price), 2) AS avg_price,
 ROUND(MIN(price), 2) AS min_price,
@@ -77,42 +103,38 @@ ROUND(AVG(review_rate_number), 2) AS avg_review_rate,
 ROUND(AVG(minimum_nights), 1) AS avg_min_nights,
 ROUND(AVG(availability_365), 0) AS avg_availability
 FROM listings
-WHERE neighbourhood_group = 'Bronx'
-GROUP BY neighbourhood
+WHERE neighbourhood IN ('Mott Haven', 'Schuylerville', 'Belmont')
+GROUP BY neighbourhood, room_type
 HAVING COUNT(*) >= 5
-ORDER BY listings DESC;
-
--- ============================================================
-
--- FOLLOW UP 3D. QUEENS NEIGHBORHOOD RECOMMENDATION 
--- Identify top-performing neighborhoods in Queens and the room type & pricing for hosts to target.
-
-SELECT
-room_type,
-COUNT(*) AS total_listings,
-SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END) AS instant_book_listings,
-ROUND(100 * SUM(CASE WHEN instant_bookable = 'True' THEN 1 ELSE 0 END) / COUNT(*),1) AS adoption_rate,
-ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN review_rate_number END), 2) AS avg_rating_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN review_rate_number END), 2) AS avg_rating_no_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'True' THEN number_of_reviews END), 1) AS avg_reviews_ib,
-ROUND(AVG(CASE WHEN instant_bookable = 'False' THEN number_of_reviews END), 1) AS avg_reviews_no_ib
-FROM listings
-GROUP BY room_type
-ORDER BY total_listings DESC;
+ORDER BY avg_review_rate DESC;
 
 -- ============================================================
 -- KEY TAKEAWAY:
 
--- Similarly, across all 4 room types, Instant Book provides no meaningful drive. 
+-- Within Queens, the top-rated neighborhoods are:
+-- 1. Briarwood (4 review rate with 33 listings)
+-- 2. Laurelton (3.82)
+-- 3. The cluster of Far Rockaway / Bayside / Rosedale / 
+-- South Ozone Park / St. Albans (all 3.65-3.71)
+--
+-- Ridgewood (183 listings, 8.1 monthly reviews) is the volume and engagement leader
 
--- Hotel rooms show the opposite pattern as  non-Instant Book hotel listings generate 36% more reviews (105.9 vs 77.9) AND higher ratings (3.58 vs 3.52), though the sample is tiny (91 listings)
-
--- All in all, we can conclude that Instant Book does not show any specific effect on any of the room types, price listings or boroughs
--- Sometimes, it shows contrasting patterns, as low-price listings and hotel rooms both perform worse with it.
+-- Pricing is consistent across all top performers ($530-$788), indicating Queens is a quality-driven market instead of differentiating based on price
 -- ============================================================
 -- RECOMMENDATION:
 
--- Instant Book is neither a growth lever nor a friction point worth product investment. 
+-- 1. Expand to high demand areas - Ridgewood, Maspeth, St. Albans, as these new hosts here enter an active market with engagement.
+-- Build an in-product dashboard showing new hosts the average rating and price range for their neighborhood and room type combination. 
+-- Right now, hosts onboarding into Queens have no visibility into which neighborhoods actually perform, as they default to well-known areas like Astoria, missing higher-quality opportunities in places like Briarwood or Ridgewood.
 
--- Resources currently spent promoting it should redirect to availability tools, pricing guidance, and the monthly-stay product tier, which was also suggested earlier
+-- 2. Position smaller markets but top-tier ratings - Briarwood, Laurelton, Far 
+
+-- 3. Pricing guidance for new Queens hosts: target $600-700 (the median of top performers), as below $530 signals quality concerns, while above $800 raises expectations for high ratings
+-- Airbnb could build a "price fit" indicator on the listing creation flow: 
+-- A host pricing too low or too high will see a warning 
+-- This nudges hosts toward the price band where quality wins
 -- ============================================================
+
+-- NEED PYTHON CHECK MAP AND ALSO NEED REVIEW MAKE SURE PRODUCT REC IS GOOD, ALSO EXPLAIN WHY USE SQL AND NOT PYTHON
+-- THEN POWER BI VISUALIZATION
+-- THEN AI LAYER SUGGESTION
