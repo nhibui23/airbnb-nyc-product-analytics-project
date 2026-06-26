@@ -85,7 +85,7 @@ ORDER BY listings DESC;
 -- ============================================================
 
 -- FOLLOW UP 3D. QUEENS NEIGHBORHOOD RECOMMENDATION 
--- Identify top-performing neighborhoods in Queens and the ideal room type + price profile for a new host to target.
+-- Identify top-performing neighborhoods in Queens and the room type & pricing for hosts to target.
 
 SELECT
 room_type,
