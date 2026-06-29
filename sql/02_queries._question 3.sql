@@ -132,7 +132,3 @@ ORDER BY avg_review_rate DESC;
 -- 2. Build a "price-quality fit" warning: if a host is pricing in the top quartile for their neighborhood and room type, surface the average rating at that price point. 
 -- This encourages hosts to either reconsider the price or invest in quality improvements 
 -- ============================================================
-
--- NEED PYTHON CHECK MAP AND ALSO NEED REVIEW MAKE SURE PRODUCT REC IS GOOD, ALSO EXPLAIN WHY USE SQL AND NOT PYTHON
--- THEN POWER BI VISUALIZATION
--- THEN AI LAYER SUGGESTION
