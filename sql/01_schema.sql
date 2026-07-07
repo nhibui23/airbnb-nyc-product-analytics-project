@@ -1,3 +1,12 @@
+-- =====================================================
+-- SQL QUERIES FOR VACANCY COACH PROTOTYPE
+-- Purpose: The 3  queries a product team would actually
+--          run to operate the Airbnb AI prototype.
+--          Each answers a business question and pulls a
+--          list that product and engineer could act on directly.
+-- Author:  Nhi Bui
+-- =====================================================
+
 -- Create table without PRIMARY KEY 
 
 DROP TABLE IF EXISTS listings;
