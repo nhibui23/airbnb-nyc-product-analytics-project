@@ -6,7 +6,7 @@
 --
 -- Filter logic:
 --   * review_rate_number >= 4.5   
---   * occupancy_proxy    < 0.5    
+--   * occupancy_proxy < 0.5    
 
 WITH proxies AS (
     SELECT id,name, neighbourhood_group, neighbourhood, price, review_rate_number, number_of_reviews,
