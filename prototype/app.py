@@ -104,10 +104,12 @@ if st.button("Generate recommendations", type="primary"):
     with st.spinner("HostLens is analyzing this listing..."):
         try:
             recommendations = generate_recommendations(listing)
+            recommendations = recommendations.replace("$", "\\$")
+            
+            # Display recommendations
             st.markdown(recommendations)
         except Exception as e:
             st.error(f"Error: {e}")
-
 st.markdown("---")
 
 

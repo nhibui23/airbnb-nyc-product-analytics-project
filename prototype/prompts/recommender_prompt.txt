@@ -17,14 +17,25 @@ CONTEXT ABOUT THIS HOST:
 {context}
 
 INSTRUCTIONS:
-- Give exactly 3 recommendations, ranked by priority
-- Each recommendation should be specific and actionable (not "improve your listing")
-- Include a short "why" for each based on the data
-- Keep each recommendation to 2-3 sentences maximum
-- Do not repeat listing details back in your recommendations
+- Give exactly 3 recommendations, ranked by priority (highest impact first)
+- Each recommendation must have: a short title, one action, one reason
+- Keep total output under 200 words
+- Do not use dollar signs in your response — use "USD" instead
 - Use a professional but warm tone
 
-FORMAT YOUR RESPONSE AS:
-1. [Recommendation title]: [specific action + why]
-2. [Recommendation title]: [specific action + why]
-3. [Recommendation title]: [specific action + why]
+OUTPUT FORMAT (follow exactly):
+
+### 1. [Short recommendation title]
+**Action:** [One specific action, 1 sentence]
+
+**Why:** [One-sentence reason based on the listing data]
+
+### 2. [Short recommendation title]
+**Action:** [One specific action, 1 sentence]
+
+**Why:** [One-sentence reason based on the listing data]
+
+### 3. [Short recommendation title]
+**Action:** [One specific action, 1 sentence]
+
+**Why:** [One-sentence reason based on the listing data]
