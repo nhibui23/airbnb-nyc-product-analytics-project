@@ -54,8 +54,10 @@ else:
     filtered = segment_df
 
 # Listing dropdown
+filtered = filtered[(filtered['occupancy_proxy'] >= 0.05) & (filtered['occupancy_proxy'] <= 0.45)]
+
 listing_options = [
-    f"{row['NAME'][:60]}... — ${int(row['price'])}/night"
+    f"{row['NAME'][:60]}... — ${int(row['price'])}/night ({int(row['occupancy_proxy']*100)}% booked)"
     for _, row in filtered.head(50).iterrows()
 ]
 
@@ -89,7 +91,28 @@ st.markdown("---")
 # PLACEHOLDER FOR FEATURES A & B
 # ============================================================================
 
-st.info(
-    "**Coming next:** AI-generated vacancy recommendations (Feature A) and "
-    "event-based positioning suggestions (Feature B)."
+from recommender import generate_recommendations
+
+st.subheader("HostLens Recommendations")
+st.caption(
+    "AI-generated, prioritized actions this host can take to reduce vacancy. "
+    "Recommendations are routed based on review count: hosts with fewer than 50 reviews "
+    "receive review-building guidance, hosts with 50+ reviews receive positioning guidance."
 )
+
+if st.button("Generate recommendations", type="primary"):
+    with st.spinner("HostLens is analyzing this listing..."):
+        try:
+            recommendations = generate_recommendations(listing)
+            st.markdown(recommendations)
+        except Exception as e:
+            st.error(f"Error: {e}")
+
+st.markdown("---")
+
+
+# ============================================================================
+# PLACEHOLDER FOR FEATURE B
+# ============================================================================
+
+st.info("**Coming next:** Event-based positioning suggestions (Feature B) and a host-facing dashboard (Feature C).")
