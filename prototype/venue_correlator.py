@@ -43,6 +43,12 @@ def find_nearest_venue(listing, max_distance_mi=1.5):
 def generate_positioning(listing, venue):
     """Generate positioning suggestions based on nearby venue."""
     api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not api_key:
+        try:
+            import streamlit as st
+            api_key = st.secrets["ANTHROPIC_API_KEY"]
+        except Exception:
+            pass
     client = Anthropic(api_key=api_key)
     
     prompt_path = Path(__file__).parent / "prompts" / "event_prompt.txt"
