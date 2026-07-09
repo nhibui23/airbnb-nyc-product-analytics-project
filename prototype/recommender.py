@@ -10,13 +10,20 @@ load_dotenv()
 
 
 def get_client():
-    """Initialize the Claude API client."""
+    """Initialize the Claude API client. Works locally (.env) and on Streamlit Cloud (secrets)."""
     api_key = os.getenv("ANTHROPIC_API_KEY")
+    
+    # Fall back to Streamlit secrets when deployed
     if not api_key:
-        raise ValueError(
-            "ANTHROPIC_API_KEY not found. Make sure you have a .env file "
-            "with your API key in the prototype/ folder."
-        )
+        try:
+            import streamlit as st
+            api_key = st.secrets["ANTHROPIC_API_KEY"]
+        except Exception:
+            pass
+    
+    if not api_key:
+        raise ValueError("ANTHROPIC_API_KEY not found in environment or Streamlit secrets.")
+    
     return Anthropic(api_key=api_key)
 
 

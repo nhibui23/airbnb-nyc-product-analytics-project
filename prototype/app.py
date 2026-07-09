@@ -293,22 +293,26 @@ with tab2:
                     st.error(f"Error: {e}")
 
         if st.session_state.positioning:
-            positioning = st.session_state.positioning.replace("$", "\\$")
-            positioning_html = md_to_html(positioning)
+            import json
 
-            st.markdown(
-                f"""
-                <div style='
-                    background-color: white;
-                    padding: 22px 26px;
-                    border-radius: 12px;
-                    border-left: 4px solid #FC642D;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                '>
-                    <div style='color: #484848; line-height: 1.7; font-size: 15px;'>
-                        {positioning_html}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+            raw = st.session_state.positioning.strip()
+            raw = re.sub(r'^```json\s*|\s*```$', '', raw).strip()
+            raw = re.sub(r'^```\s*|\s*```$', '', raw).strip()
+
+            try:
+                pos = json.loads(raw)
+            except Exception:
+                st.error("Could not parse suggestions. Try regenerating.")
+                pos = {}
+
+            new_name = pos.get("listing_name", "")
+            description = pos.get("description", "")
+            amenities = pos.get("amenities", [])
+
+            amenities_html = ""
+            for amenity in amenities:
+                amenities_html += f"<div style='display: flex; align-items: flex-start; margin-bottom: 8px;'><span style='color: #FC642D; margin-right: 10px; font-size: 16px;'>✦</span><span style='color: #484848; font-size: 15px; line-height: 1.4;'>{amenity}</span></div>"
+
+            card_html = f"<div style='background: linear-gradient(135deg, #ffffff 0%, #fffaf7 100%); padding: 26px 30px; border-radius: 16px; border: 1px solid #f5e6dc; box-shadow: 0 4px 16px rgba(0,0,0,0.04);'><div style='margin-bottom: 20px;'><div style='color: #FC642D; font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px;'>SUGGESTED LISTING NAME</div><div style='color: #222222; font-size: 20px; font-weight: 700; line-height: 1.3;'>{new_name}</div></div><div style='margin-bottom: 20px;'><div style='color: #FC642D; font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px;'>DESCRIPTION ANGLE</div><div style='color: #484848; font-size: 15px; line-height: 1.6;'>{description}</div></div><div><div style='color: #FC642D; font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px;'>RECOMMENDED AMENITIES</div>{amenities_html}</div></div>"
+
+            st.markdown(card_html, unsafe_allow_html=True)
