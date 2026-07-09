@@ -25,17 +25,17 @@ INSTRUCTIONS:
 
 OUTPUT FORMAT (follow exactly):
 
-### 1. [Short recommendation title]
+**1. [Short recommendation title]**
 **Action:** [One specific action, 1 sentence]
 
 **Why:** [One-sentence reason based on the listing data]
 
-### 2. [Short recommendation title]
+**2. [Short recommendation title]**
 **Action:** [One specific action, 1 sentence]
 
 **Why:** [One-sentence reason based on the listing data]
 
-### 3. [Short recommendation title]
+**3. [Short recommendation title]**
 **Action:** [One specific action, 1 sentence]
 
 **Why:** [One-sentence reason based on the listing data]

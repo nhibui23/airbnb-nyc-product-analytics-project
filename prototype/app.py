@@ -106,8 +106,44 @@ if st.button("Generate recommendations", type="primary"):
             recommendations = generate_recommendations(listing)
             recommendations = recommendations.replace("$", "\\$")
             
-            # Display recommendations
-            st.markdown(recommendations)
+            # Parse the recommendations into individual items
+            # Split by "**1.", "**2.", "**3."
+            import re
+            parts = re.split(r'\*\*\d+\.', recommendations)
+            # First element is empty (before the first "1."), skip it
+            items = [p.strip() for p in parts if p.strip()]
+            
+            # Display each in a styled card
+            for i, item in enumerate(items, 1):
+                # Remove trailing ** from title
+                item = item.strip()
+                
+                st.markdown(
+                    f"""
+                    <div style='
+                        background-color: white;
+                        padding: 20px;
+                        border-radius: 12px;
+                        border-left: 4px solid #FF5A5F;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                        margin-bottom: 15px;
+                    '>
+                        <div style='
+                            display: inline-block;
+                            background-color: #FF5A5F;
+                            color: white;
+                            padding: 4px 12px;
+                            border-radius: 20px;
+                            font-size: 12px;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        '>PRIORITY {i}</div>
+                        <div style='color: #484848; line-height: 1.6;'>{item}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+                
         except Exception as e:
             st.error(f"Error: {e}")
 st.markdown("---")
