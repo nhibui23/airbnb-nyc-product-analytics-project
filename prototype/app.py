@@ -144,25 +144,48 @@ tab1, tab2 = st.tabs(["🎯 Vacancy Recommendations", "📍 Event & Venue Positi
 # TAB 1: FEATURE A — VACANCY RECOMMENDATIONS
 # ============================================================================
 
-if st.session_state.recommendations:
-        recommendations = st.session_state.recommendations.replace("$", "\\$")
+with tab1:
+    from recommender import generate_recommendations
+
+    st.markdown(
+        """
+        <div style='padding: 12px 0 8px 0;'>
+            <p style='color: #767676; font-size: 14px; margin: 0;'>
+                AI-generated actions prioritized by impact. Recommendations are routed based on the host's review count.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    if st.button("Generate recommendations", type="primary", key="rec_btn"):
+        with st.spinner("HostLens is analyzing this listing..."):
+            try:
+                st.session_state.recommendations = generate_recommendations(listing)
+            except Exception as e:
+                st.error(f"Error: {e}")
+
+    if st.session_state.recommendations:
+        import json
         
-        # Parse TITLE/ACTION/WHY blocks
-        blocks = re.split(r'TITLE:', recommendations)
-        blocks = [b.strip() for b in blocks if b.strip()]
+        raw = st.session_state.recommendations.strip()
+        # Remove markdown code fences if present
+        raw = re.sub(r'^```json\s*|\s*```$', '', raw).strip()
+        raw = re.sub(r'^```\s*|\s*```$', '', raw).strip()
+        
+        try:
+            recs = json.loads(raw)
+        except Exception:
+            st.error("Could not parse recommendations. Try regenerating.")
+            recs = []
         
         priority_labels = ["HIGHEST IMPACT", "MEDIUM IMPACT", "QUICK WIN"]
         priority_colors = ["#FF5A5F", "#FC642D", "#00A699"]
         
-        for i, block in enumerate(blocks):
-            # Extract title, action, why
-            title_match = re.match(r'(.+?)(?:ACTION:|$)', block, re.DOTALL)
-            action_match = re.search(r'ACTION:(.+?)(?:WHY:|$)', block, re.DOTALL)
-            why_match = re.search(r'WHY:(.+)', block, re.DOTALL)
-            
-            title = title_match.group(1).strip() if title_match else ""
-            action = action_match.group(1).strip() if action_match else ""
-            why = why_match.group(1).strip() if why_match else ""
+        for i, rec in enumerate(recs):
+            title = rec.get("title", "").replace("$", "\\$")
+            action = rec.get("action", "").replace("$", "\\$")
+            why = rec.get("why", "").replace("$", "\\$")
             
             color = priority_colors[i] if i < len(priority_colors) else "#FF5A5F"
             label = priority_labels[i] if i < len(priority_labels) else f"PRIORITY {i+1}"
@@ -179,57 +202,33 @@ if st.session_state.recommendations:
                     position: relative;
                     overflow: hidden;
                 '>
-                    <div style='
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 5px;
-                        height: 100%;
-                        background: {color};
-                    '></div>
-                    <div style='display: flex; align-items: center; margin-bottom: 14px;'>
+                    <div style='position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: {color};'></div>
+                    <div style='display: flex; align-items: center; margin-bottom: 16px;'>
                         <div style='
-                            background-color: {color};
-                            color: white;
-                            width: 32px;
-                            height: 32px;
-                            border-radius: 50%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-weight: 700;
-                            font-size: 15px;
-                            margin-right: 12px;
+                            background-color: {color}; color: white; width: 32px; height: 32px;
+                            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+                            font-weight: 700; font-size: 15px; margin-right: 12px; flex-shrink: 0;
                         '>{i+1}</div>
                         <div>
-                            <div style='
-                                color: {color};
-                                font-size: 10px;
-                                font-weight: 700;
-                                letter-spacing: 1px;
-                            '>{label}</div>
-                            <div style='
-                                color: #222222;
-                                font-size: 17px;
-                                font-weight: 600;
-                            '>{title}</div>
+                            <div style='color: {color}; font-size: 10px; font-weight: 700; letter-spacing: 1px;'>{label}</div>
+                            <div style='color: #222222; font-size: 17px; font-weight: 600;'>{title}</div>
                         </div>
                     </div>
                     <div style='margin-left: 44px;'>
-                        <div style='margin-bottom: 10px;'>
-                            <span style='color: {color}; font-weight: 600; font-size: 13px;'>→ ACTION</span>
-                            <div style='color: #484848; font-size: 15px; line-height: 1.5; margin-top: 2px;'>{action}</div>
+                        <div style='margin-bottom: 12px;'>
+                            <span style='color: {color}; font-weight: 600; font-size: 12px; letter-spacing: 0.5px;'>→ ACTION</span>
+                            <div style='color: #484848; font-size: 15px; line-height: 1.5; margin-top: 3px;'>{action}</div>
                         </div>
                         <div>
-                            <span style='color: #999999; font-weight: 600; font-size: 13px;'>WHY IT WORKS</span>
-                            <div style='color: #767676; font-size: 14px; line-height: 1.5; margin-top: 2px;'>{why}</div>
+                            <span style='color: #999999; font-weight: 600; font-size: 12px; letter-spacing: 0.5px;'>WHY IT WORKS</span>
+                            <div style='color: #767676; font-size: 14px; line-height: 1.5; margin-top: 3px;'>{why}</div>
                         </div>
                     </div>
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
-            
+
 # ============================================================================
 # TAB 2: FEATURE B — EVENT & VENUE CORRELATION
 # ============================================================================

@@ -14,20 +14,13 @@ NEARBY VENUE:
 - Distance from listing: {distance_mi} miles
 
 INSTRUCTIONS:
-- Generate 3 suggestions to help this listing attract {venue_type} guests
 - Do not use dollar signs, use "USD" instead
-- Keep total output under 200 words
+- Respond with ONLY valid JSON, no other text, no markdown code fences
 - Focus on positioning, not price changes
 
-OUTPUT FORMAT (follow exactly):
-
-**Suggested New Listing Name**
-[A better listing title that references the nearby venue, 8-12 words]
-
-**Description Angle**
-[One 2-sentence description angle emphasizing the venue's appeal]
-
-**Recommended Amenities**
-- [Amenity 1]
-- [Amenity 2]
-- [Amenity 3]
+Respond in exactly this JSON format:
+{{
+  "listing_name": "A better listing title referencing the nearby venue, 8-12 words",
+  "description": "A 2-sentence description angle emphasizing the venue's appeal",
+  "amenities": ["First amenity", "Second amenity", "Third amenity"]
+}}

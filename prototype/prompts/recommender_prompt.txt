@@ -18,21 +18,13 @@ CONTEXT ABOUT THIS HOST:
 
 INSTRUCTIONS:
 - Give exactly 3 recommendations, ranked by priority (highest impact first)
-- Each recommendation must have: a short title, one action, one reason
-- Keep total output under 200 words
-- Do not use dollar signs in your response — use "USD" instead
+- Do not use dollar signs — use "USD" instead
+- Respond with ONLY valid JSON, no other text, no markdown code fences
 - Use a professional but warm tone
 
-OUTPUT FORMAT (follow exactly):
-
-TITLE: [Short recommendation title]
-ACTION: [One specific action, 1 sentence]
-WHY: [One-sentence reason based on the listing data]
-
-TITLE: [Short recommendation title]
-ACTION: [One specific action, 1 sentence]
-WHY: [One-sentence reason based on the listing data]
-
-TITLE: [Short recommendation title]
-ACTION: [One specific action, 1 sentence]
-WHY: [One-sentence reason based on the listing data]
+Respond in exactly this JSON format:
+[
+  {{"title": "Short title", "action": "One specific action sentence", "why": "One reason sentence based on the data"}},
+  {{"title": "Short title", "action": "One specific action sentence", "why": "One reason sentence based on the data"}},
+  {{"title": "Short title", "action": "One specific action sentence", "why": "One reason sentence based on the data"}}
+]
