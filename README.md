@@ -56,12 +56,15 @@ The prototype loads a target host, generates personalized recommendations throug
 
 ## Project Structure
 
+```
 airbnb-nyc-product-analytics-project/
 ├── data/           # Raw and cleaned Kaggle dataset (proxy for real Airbnb data)
 ├── notebook/       # Six Jupyter notebooks — the analysis behind the recommendation
 ├── sql/            # Three operational SQL queries a product team could run to launch
 ├── powerbi/        # Two-page dashboard: Guest View + Host View
 ├── prototype/      # Streamlit + Claude API — HostLens working prototype
+└── archive/        # Earlier project iterations, preserved for transparency
+```
 
 ---
 
