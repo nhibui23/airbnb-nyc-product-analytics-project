@@ -379,12 +379,13 @@ with st.expander("What is HostLens?"):
 
 with st.expander("How does HostLens fit Airbnb's mission?"):
     st.write(
-        "Airbnb's mission is to help people belong anywhere. But that only works if hosts "
-        "can sustain their listings. Today, thousands of highly-rated NYC hosts are "
-        "underperforming despite offering great stays — sitting at 19% occupancy at "
-        "an average of $620/night. That's $735M of unused revenue in NYC alone. "
-        "HostLens gives these hosts AI-driven guidance to close the gap. More successful "
-        "hosts means more available stays for guests, and a stronger marketplace overall."
+        "Airbnb's mission is to help people belong anywhere. That mission depends on hosts "
+        "being able to sustain their listings. Today, thousands of highly-rated NYC hosts "
+        "are underperforming — sitting at 19% occupancy at an average of $620 per night. "
+        "That represents $735M of unused revenue in NYC alone. HostLens is a proposed "
+        "product designed to close that gap by giving these hosts personalized, "
+        "AI-driven recommendations. If it works, the outcome is more successful hosts, "
+        "more available stays for guests, and a stronger marketplace overall."
     )
 
 with st.expander("How does the AI work?"):
