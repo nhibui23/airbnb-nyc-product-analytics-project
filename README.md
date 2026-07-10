@@ -1,42 +1,70 @@
-# Airbnb NYC - A Product Analytics Case Study
+# Airbnb NYC - HostLens Feasibility Study
 
-**A two-lens analysis of the NYC Airbnb marketplace for a proposal of an Airbnb AI prototype.**
-
-Project by [Nhi Bui](https://linkedin.com/in/nhiuyenbui) · Villanova University
-
----
-
-## Overview
-
-Airbnb has two customers: guests who book and hosts who list. This project analyzes 63,718 NYC listings from both sides to answer:
-
-1. **Guest lens:** Which listing features actually affect booking behavior?
-2. **Host lens:** How much revenue is each listing generating, and which highly-rated hosts show significant vacancy?
-
-Findings are combined into recommendations and an AI-powered prototype that helps underperforming hosts close the gap.
+**Should Airbnb build an AI recommendation tool for underperforming hosts?**
+A product feasibility study by [Nhi Bui](https://linkedin.com/in/nhiuyenbui) · Villanova University
 
 ---
 
-## Key findings
+## The Premise
 
-- **Instant Book and host verification show no effect on guest ratings.** 2 of the 3 commonly promoted "quality" features are not statistically significant.
-- **Very High priced listings underperform.** Rating drops significantly for listings above $1,000/night.
-- **Review count matters only up to about 50 reviews.** Past 50 reviews, additional reviews don't improve occupancy.
-- **6,412 listings hold a $735M unused revenue gap.** These 5-star listings sit at 19% occupancy, at an average of $620/night.
+Airbnb leadership has proposed HostLens, an AI-powered tool that would give underperforming hosts personalized recommendations to reduce vacancy. Before committing to build, 3 questions need to be answered:
+
+1. Is the target market real and large enough to justify the investment?
+2. What actually drives guest booking behavior, and does the recommendation logic have a basis?
+3. Does the product prototype feel viable when leadership tries it?
+
+This project answers all 3 questions using a public Kaggle dataset of 63K NYC listings as a proxy for real Airbnb data, then delivers a working prototype for leadership to evaluate.
 
 ---
 
-## Project structure 
+## Key Findings
 
-├── data/           Raw and cleaned Kaggle dataset
+**On market size (host lens):**
 
-├── notebook/       6 Jupyter notebooks (Python analysis)
+- 6,412 NYC listings hold 5-star ratings but sit at less than 50% occupancy
+- Aggregate revenue gap: $735M if the segment lifted to 70% occupancy
+- Average opportunity per host: $114,647 per year
+- The segment is concentrated in Manhattan (2,615) and Brooklyn (2,405)
 
-├── sql/            PostgreSQL queries
+**On what drives guest behavior (guest lens):**
 
-├── powerbi/        Two-view dashboard (Guest View + Host View)
+- Instant Book has no measurable effect on ratings (p = 0.38)
+- Host verification has no measurable effect on ratings (p = 0.91)
+- Price tier does affect ratings, with Very High priced listings underperforming (ANOVA p = 0.0008)
+- Review count stops meaningfully influencing occupancy after around 50 reviews
 
-├── prototype/      Streamlit app powered by the Claude API
+**On the routing logic:**
+
+- The 50-review threshold splits the target segment into 76% below (need review-building help) and 24% above (need positioning help)
+- Both groups have similar occupancy and price, meaning review count is the meaningful signal for segmentation
+
+---
+
+## The Recommendation
+
+Build HostLens. The market is real ($735M gap in NYC alone), the behavioral drivers are known (price and review count matter, features like Instant Book do not), and the prototype demonstrates a defensible routing logic based on the analysis.
+
+---
+
+## Live Prototype
+
+Try HostLens: https://airbnb-nyc-appuct-analytics-project-qkl8xdb4vwltgjrb2k8ghd.streamlit.app/
+
+The prototype loads a target host, generates personalized recommendations through the Claude API, and routes each host to 1 of 2 recommendation paths based on the 50-review threshold. It also detects nearby NYC venues (Barclays Center, Madison Square Garden, wedding venues) and suggests event-based positioning.
+
+---
+
+## Project Structure
+
+```
+airbnb-nyc-product-analytics-project/
+├── data/           # Raw and cleaned Kaggle dataset (proxy for real Airbnb data)
+├── notebook/       # Six Jupyter notebooks — the analysis behind the recommendation
+├── sql/            # Three operational SQL queries a product team could run to launch
+├── powerbi/        # Two-page dashboard: Guest View + Host View
+├── prototype/      # Streamlit + Claude API — HostLens working prototype
+└── archive/        # Earlier project iterations, preserved for transparency
+```
 
 ---
 
@@ -46,20 +74,23 @@ Python (pandas, scipy, statsmodels, matplotlib, seaborn) · PostgreSQL · Power 
 
 ## Dataset
 
-[Airbnb Open Data on Kaggle](https://www.kaggle.com/datasets/arianazmoudeh/airbnbopendata) - 102,599 NYC listings, cleaned to 63,718.
+[Airbnb Open Data on Kaggle](https://www.kaggle.com/datasets/arianazmoudeh/airbnbopendata) - 102,599 NYC listings, cleaned to 63,718. This is used as a proxy dataset since real Airbnb booking data isn't public. Findings should be read as directional patterns rather than exact revenue claims.
 
 ## Limitations
 
-Observational data (no true booking or revenue figures). Occupancy is estimated as `(365 - availability_365) / 365`. Ratings in this dataset are nearly uniformly distributed from 2 to 5 stars, which doesn't match real Airbnb data. Only 9 listings have > 500 reviews, which limits testing at the high end.
+- Observational data with no true booking or revenue figures
+- Occupancy is estimated as `(365 - availability_365) / 365`
+- Ratings in this dataset are nearly uniformly distributed from 2 to 5 stars, which doesn't match real Airbnb data, so findings should be read as directional
+- Only 9 listings have > 500 reviews, which limits testing of the review-count analysis
+- 179 duplicate listing IDs were detected and handled using distinct counts in Power BI
 
-## What this project demonstrates
+## What This Project Demonstrates
 
-- Framing a business problem from 2 user perspectives instead of 1
-- Using statistical testing (t-tests, ANOVA, Tukey's HSD) to serve product decisions
-- Translating analysis into an AI prototype launch
-- Designing A/B tests to validate hypotheses generated from observational analysis
+- Structuring analysis around a specific product decision rather than open-ended exploration
+- Using statistical testing (t-tests, ANOVA, Tukey's HSD) to validate product hypotheses
+- Designing A/B tests to validate observational findings in production
+- Acknowledging dataset limitations while still delivering an actionable recommendation
 
 ---
 
 **Nhi Bui** · Villanova University · [LinkedIn](https://linkedin.com/in/nhiuyenbui) · [GitHub](https://github.com/nhibui23)
-
