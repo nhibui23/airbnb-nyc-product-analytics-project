@@ -1,4 +1,4 @@
-# Airbnb NYC — HostLens Feasibility Study
+# Airbnb NYC - HostLens Feasibility Study
 
 **Should Airbnb build an AI recommendation tool for underperforming hosts?**
 A product feasibility study by [Nhi Bui](https://linkedin.com/in/nhiuyenbui) · Villanova University
